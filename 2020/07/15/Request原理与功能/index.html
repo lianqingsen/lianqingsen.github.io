@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Request原理与功能 | 雜言非語</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Respect： Respect原理和Response原理  Respect和Respnonse是由tomcat服务器创建的，我们是使用者 Respect对象是来获取请求消息，Respnonse对象是设置响应消息   Respect对象的继承体系结构  Respect功能：  获取请求消息数据 获取请求行数据  GET &#x2F;fristweb&#x2F;demo1?name&#x3D;zhangsan HTTP&#x2F;1.1">
+  <meta name="description" content="Respect：Respect原理和Response原理 Respect和Respnonse是由tomcat服务器创建的，我们是使用者  Respect对象是来获取请求消息，Respnonse对象是设置响应消息   Respect对象的继承体系结构Respect功能： 获取请求消息数据： 获取请求行数据  GET &#x2F;fristweb&#x2F;demo1?name&#x3D;zhangsan HTTP&#x2F;1.1 方法：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Request原理与功能">
 <meta property="og:url" content="http://yoursite.com/2020/07/15/Request%E5%8E%9F%E7%90%86%E4%B8%8E%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="雜言非語">
-<meta property="og:description" content="Respect： Respect原理和Response原理  Respect和Respnonse是由tomcat服务器创建的，我们是使用者 Respect对象是来获取请求消息，Respnonse对象是设置响应消息   Respect对象的继承体系结构  Respect功能：  获取请求消息数据 获取请求行数据  GET &#x2F;fristweb&#x2F;demo1?name&#x3D;zhangsan HTTP&#x2F;1.1">
+<meta property="og:description" content="Respect：Respect原理和Response原理 Respect和Respnonse是由tomcat服务器创建的，我们是使用者  Respect对象是来获取请求消息，Respnonse对象是设置响应消息   Respect对象的继承体系结构Respect功能： 获取请求消息数据： 获取请求行数据  GET &#x2F;fristweb&#x2F;demo1?name&#x3D;zhangsan HTTP&#x2F;1.1 方法：">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-07-14T16:02:24.325Z">
-<meta property="article:modified_time" content="2020-07-14T16:02:06.367Z">
+<meta property="article:modified_time" content="2020-07-14T16:08:48.427Z">
 <meta property="article:author" content="Sen">
 <meta name="twitter:card" content="summary">
   
@@ -178,49 +178,40 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Respect："><a href="#Respect：" class="headerlink" title="Respect："></a>Respect：</h2><ol>
-<li><p>Respect原理和Response原理</p>
-<ol>
-<li>Respect和Respnonse是由tomcat服务器创建的，我们是使用者</li>
-<li>Respect对象是来获取请求消息，Respnonse对象是设置响应消息</li>
-</ol>
+        <h2 id="Respect："><a href="#Respect：" class="headerlink" title="Respect："></a>Respect：</h2><h3 id="Respect原理和Response原理"><a href="#Respect原理和Response原理" class="headerlink" title="Respect原理和Response原理"></a>Respect原理和Response原理</h3><ul>
+<li><p>Respect和Respnonse是由tomcat服务器创建的，我们是使用者</p>
 </li>
-<li><p>Respect对象的继承体系结构</p>
+<li><p>Respect对象是来获取请求消息，Respnonse对象是设置响应消息</p>
 </li>
-<li><p>Respect功能：</p>
-<ol>
-<li><p>获取请求消息数据</p>
+</ul>
+<h3 id="Respect对象的继承体系结构"><a href="#Respect对象的继承体系结构" class="headerlink" title="Respect对象的继承体系结构"></a>Respect对象的继承体系结构</h3><p>Respect功能：</p>
+<p>获取请求消息数据：</p>
 <p>获取请求行数据</p>
 <ul>
 <li><p>GET /fristweb/demo1?name=zhangsan HTTP/1.1</p>
-</li>
-<li><p>方法：</p>
+<p>方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">JavEE  HttpServletRequest包下 (*)代表重点掌握</span><br><span class="line"><span class="number">1</span>. 获取请求方式：GET   </span><br><span class="line">    * <span class="function">String <span class="title">getMethod</span><span class="params">()</span></span></span><br><span class="line"><span class="function">2. <span class="params">(*)</span>获取虚拟目录</span></span><br><span class="line"><span class="function">    * String <span class="title">getContextPath</span><span class="params">()</span></span></span><br><span class="line"><span class="function">3. 获取Servlet路劲 /demo1</span></span><br><span class="line"><span class="function">    * String <span class="title">getServlePath</span><span class="params">()</span></span></span><br><span class="line"><span class="function">4. 获取get方式的请求参数：name</span>=zhangsan</span><br><span class="line">    * <span class="function">String <span class="title">getQueryString</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5. <span class="params">(*)</span>获取请求Url:/fristweb/demo1</span></span><br><span class="line"><span class="function">    * String <span class="title">getRequestURI</span><span class="params">()</span>   /fristweb/demo1</span></span><br><span class="line"><span class="function">    * StringBuffer <span class="title">getRequestURL</span><span class="params">()</span> : http:<span class="comment">//localhost/fristweb/demo1</span></span></span><br><span class="line"><span class="function">    </span></span><br><span class="line"><span class="function">    * URI:统一资源定位符  /fristweb/demo1</span></span><br><span class="line"><span class="function">    * URL:统一资源标识符  http:<span class="comment">//localhost/fristweb/demo1</span></span></span><br><span class="line"><span class="function">        </span></span><br><span class="line"><span class="function">6. 获取协议及：HTTP/1.1</span></span><br><span class="line"><span class="function">    * String <span class="title">getProtocol</span><span class="params">()</span></span></span><br><span class="line"><span class="function">7. 获取客户端的IP地址</span></span><br><span class="line"><span class="function">    * String <span class="title">getRemoteAddr</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+
 
 </li>
 </ul>
-<p>获取请求头数据</p>
+<p><strong>获取请求头数据</strong></p>
 <ul>
 <li><p>方法：</p>
-<ul>
-<li><p><strong>(*)String getHeader(String name):通过请求头的名称获取请求头值</strong></p>
+<p><strong>(*)String getHeader(String name):通过请求头的名称获取请求头值</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//演示获取请求头数据：user-agent</span></span><br><span class="line">String agent = request.getHeader(<span class="string">"user-agent"</span>);</span><br><span class="line"><span class="comment">//判断agent的浏览器版本</span></span><br><span class="line"><span class="keyword">if</span>(agent.contains(<span class="string">"Chrome"</span>))&#123;</span><br><span class="line">    System.out.println(<span class="string">"谷歌。。。"</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(agent.contains(<span class="string">"Firefox"</span>))&#123;</span><br><span class="line">    System.out.println(<span class="string">"火狐。。。"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Enumeration<String>getHeaderNames():获取</p>
+
+<p>Enumeration<String>getHeaderNames():获取</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//演示获取请求头数据</span></span><br><span class="line"><span class="comment">//1. 获取所有请求头名称</span></span><br><span class="line">Enumeration&lt;String&gt; headerNames = request.getHeaderNames();</span><br><span class="line"><span class="comment">//遍历</span></span><br><span class="line"><span class="keyword">while</span>(headerNames.hasMoreElements())&#123;</span><br><span class="line">    <span class="comment">//获取下一个元素，把名字复制给key</span></span><br><span class="line">    String key = headerNames.nextElement();</span><br><span class="line">    <span class="comment">//通过名字来获取请求头的值</span></span><br><span class="line">    System.out.println(key+<span class="string">"---"</span>+request.getHeader(key));</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-</li>
-</ul>
-<p>获取请求体数据</p>
+<p><strong>获取请求体数据</strong></p>
 <ul>
 <li><p>请求体：只有POST请求方式，才有请求体，在请求体中封装POST请求参数</p>
 <p>步骤：</p>
-<ol>
-<li><p>获取流对象</p>
-<ul>
-<li><p><strong>(*)BufferedReader getReader():获取字符输入流，只能操作字符数据</strong></p>
+<p>   获取流对象</p>
+<p><strong>(*)BufferedReader getReader():获取字符输入流，只能操作字符数据</strong></p>
 <ol>
 <li><pre><code class="java">BufferedReader reader = request.getReader();
     <span class="comment">// 1.获取字符流</span>
@@ -233,34 +224,18 @@
 </li>
 </ol>
 </li>
-<li><p>中文乱码问题：</p>
-</li>
-<li><p>get方式：tomcat 8已经get方式乱码问题已经解决了</p>
-</li>
-<li><p>post方式：会乱码</p>
-<ul>
-<li><p>解决：在获取参数前，设置requeust的编码：</p>
+<li><p><strong>中文乱码问题：</strong></p>
+<p>get方式：tomcat 8已经get方式乱码问题已经解决了</p>
+<p>post方式：会乱码</p>
+<p>解决：在获取参数前，设置requeust的编码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-</li>
+<ul>
+<li>请求转发</li>
+<li>共享数据</li>
+<li>获取ServletContext</li>
 </ul>
-</li>
-</ol>
-</li>
-</ul>
-<ol start="2">
-<li><p>请求转发</p>
-</li>
-<li><p>共享数据</p>
-</li>
-<li><p>获取ServletContext</p>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
 
       
 
@@ -353,6 +328,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2020/07/15/%E6%95%B0%E7%BB%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          数组
+        
+      </div>
+    </a>
   
   
     <a href="/2020/07/13/Tomcat&Servlet%E5%85%A5%E9%97%A8/" id="article-nav-older" class="article-nav-link-wrap">
